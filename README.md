@@ -33,6 +33,14 @@ images/
 
 ## Utilisation des méthodes de segmentation
 
+### Méthode tester
+
+| Algorithme                                                                                                                                                         | Avantages                                                                                              | Inconvenients                                                                                   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| [Watershed](https://scikit-image.org/docs/0.12.x/auto_examples/segmentation/plot_watershed.html?highlight=segmentation)                                            | Efficace pour la séparation des objets qui se chevauchent, bien adapté aux images de particules        | Sensible au bruit, nécessite un prétraitement soigné                                            |
+| [Sobel](https://scikit-image.org/docs/stable/auto_examples/edges/plot_edge_filter.html#sphx-glr-auto-examples-edges-plot-edge-filter-py)                           | Simple et rapide, bon pour détecter les contours et les changements d'intensité dans une image         | Peu efficace pour la segmentation complexe, sensible au bruit                                   |
+| [Expand labels](https://scikit-image.org/docs/stable/auto_examples/segmentation/plot_expand_labels.html#sphx-glr-auto-examples-segmentation-plot-expand-labels-py) | Utile pour étendre les labels existants dans les zones voisines, simple pour améliorer les annotations | Ne crée pas de nouvelles segmentations, dépend des labels existants + Inéfficace dans notre cas |
+
 ## Description de l'algorithme
 
 ## Résultats
