@@ -37,8 +37,6 @@ images/
 
 ## Résultats
 
-Ce rapport présente notre travail sur le TP2 du cours 8INF804 - Vision artificielle et traitement des images. L'objectif est d'utiliser un algorithme de segmentation sur des images d'échantillons de minéraux afin de faire la moyenne sur chacun
-
 ## Ouverture
 
 Le fichier `segment_anything.py` provient du repository suivant [Segment Anything](https://github.com/facebookresearch/segment-anything) avec certaines modifications. Il nous à permit de tester la segmentation avec le model SAM de Facebook. Le modèle à été relativement précis avec un paramètres basic il est surement possible d'améliorer les resultats obtenue en modifiant les paramètres. Nous avons été limité par notre puissance de calcul (environ 2min pour l'image de test).
