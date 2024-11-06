@@ -8,7 +8,7 @@ from skimage.filters import sobel
 from skimage.measure import label
 from skimage.segmentation import expand_labels, watershed
 
-img_colored = cv2.imread("Echantillion1Mod2_301.png")
+img_colored = cv2.imread("Images/Echantillion1Mod2_301.png")
 img_colored = cv2.cvtColor(img_colored, cv2.COLOR_BGR2RGB)
 
 def apply_clahe(img, clip_limit=2.0, tile_grid_size=(8, 8)):
