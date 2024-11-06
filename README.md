@@ -27,7 +27,7 @@ images/
   Echantillion1Mod2_422.png
   Echantillion1Mod2_471.png
 ```
-##Utilisation des méthodes de segmentation
+## Utilisation des méthodes de segmentation
 
 
 ## Description de l'algorithme
