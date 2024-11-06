@@ -43,6 +43,13 @@ images/
 
 ## Description de l'algorithme
 
+
+** Moyenne des canaux BGR **
+- Création d'un masque pour chaque contours des minéraux détéctés.
+- Calcul des moyennes de B, de G et de R de chaques cailloux isolés. (np.mean)
+- Mise dans un tableau de data.
+- Mise en forme de ce DataFrame.
+
 ## Résultats
 
 ## Ouverture
