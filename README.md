@@ -47,11 +47,15 @@ Pour segmenter les grains de minéraux, nous avons utilisé la `region-based seg
 
 1. Prétraitement de l'image
 
-Nous avons appliqué un ajustement de contraste, appelé CLAHE (Contrast Limited Adaptive Histogram Equalization), pour renforcer les contrastes de l'image. Ce procédé améliore la visibilité des contours tout en limitant le bruit. Nous avons fixé un clipLimit de 2.0 et une tileGridSize de (8,8) pour que le contraste soit équilibré. 2. Binarisation et détection des contours
+Nous avons appliqué un ajustement de contraste, appelé CLAHE (Contrast Limited Adaptive Histogram Equalization), pour renforcer les contrastes de l'image. Ce procédé améliore la visibilité des contours tout en limitant le bruit. Nous avons fixé un clipLimit de 2.0 et une tileGridSize de (8,8) pour que le contraste soit équilibré.
+
+2. Binarisation et détection des contours
 
 Ensuite, nous avons utilisé une binarisation adaptative pour séparer les pixels clairs et foncés. Cela permet de compenser les variations de lumière dans l'image.
 
-Pour faire ressortir les bords, nous avons appliqué le filtre Sobel, qui détecte les changements d’intensité et fait ressortir les contours des grains. 3. Définition des marqueurs
+Pour faire ressortir les bords, nous avons appliqué le filtre Sobel, qui détecte les changements d’intensité et fait ressortir les contours des grains.
+
+3. Définition des marqueurs
 
 Nous avons défini des marqueurs de région dans l’image pour distinguer l’avant-plan (les grains) de l’arrière-plan. Ces marqueurs sont nécessaires pour guider l’algorithme de Watershed.
 
