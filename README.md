@@ -77,7 +77,7 @@ Une fois les grains isolés, nous avons extrait leur moyenne de couleur pour cha
 En lançant le 'main.py', nous obtenons une image PNG de nos résultats. On observe notre segmentation et la numération de chaque minéral sur chaque échantillon.
 
 <div style="width:80%; margin: auto;">
-    <img src="doc/Image.png" alt="accueil" style="width:100%;">
+    <img src="/images_docs/image.png" alt="accueil" style="width:100%;">
 </div>
 
 En plus de ce résultat notre programme enregistre les dataframes en format CSV avec les moyennes B, G et R de chaque minéral. Cela nous permet d'avoir la moyenne B, G, et R de l'image d'origine.
