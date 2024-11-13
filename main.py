@@ -1,86 +1,84 @@
+import os
+import sys
+
 import cv2
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from skimage import data
-from skimage.color import label2rgb
-from skimage.filters import sobel
-from skimage.measure import label
-from skimage.segmentation import expand_labels, watershed
+import glob
 
-img_colored = cv2.imread("Echantillion1Mod2_301.png")
-img_colored = cv2.cvtColor(img_colored, cv2.COLOR_BGR2RGB)
-
-def apply_clahe(img, clip_limit=2.0, tile_grid_size=(8, 8)):
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)
-    return clahe.apply(gray)
-
-img = apply_clahe(img_colored)
-# Threshold the image
-thresh = cv2.adaptiveThreshold(
-    img, 175, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
-
-edges = sobel(img)
-
-markers = np.zeros_like(img)
-foreground, background = 1, 2
-markers[img < 30] = background
-markers[img > 150] = foreground
+from object_segmentation import ObjectSegmentation
 
 
-ws = watershed(edges, markers)
-seg = label(ws == foreground)
-data = []
+# Render all images
 
-# Créer une copie pour dessiner les contours et numéros
-img_contours = img_colored.copy()
-img_contours_blurred = img_colored.copy()
+def main(path):
+    # Initialize figure for plotting
+    fig, axes = plt.subplots(nrows=3, ncols=6, figsize=(12, 10),
+                             gridspec_kw=dict(width_ratios=[1, 0.5, 1, 0.5, 1, 0.5]))
+    fig.subplots_adjust(hspace=0.4, wspace=0.4)  # Adjust spacing
 
-# Trouver les contours de chaque segment
-contours, _ = cv2.findContours(seg.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Create the object segmentation class
+    obj_seg = ObjectSegmentation()
 
-# Dessiner les contours et numéroter les régions
-for i, contour in enumerate(contours):
-    cv2.drawContours(img_contours, [contour], -1, (0, 255, 0), 2)  # Dessiner le contour en vert
-    # Calculer le centre du contour pour positionner le numéro
-    M = cv2.moments(contour)
-    if M["m00"] != 0:
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
-        # Ajouter le numéro de l'étiquette
-        cv2.putText(img_contours, str(i + 1), (cX, cY),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)  # Numéro bleu
-        
-    mask = np.zeros(img_colored.shape[:2], dtype=np.uint8)
-    cv2.drawContours(mask, [contour], -1, 255, -1)
+    # Load the images from path folder
+    paths_objs = glob.glob(f"{path}/*.png")
 
-    b_mean = np.mean(img_colored[:, :, 0][mask == 255])
-    g_mean = np.mean(img_colored[:, :, 1][mask == 255])
-    r_mean = np.mean(img_colored[:, :, 2][mask == 255])
+    # Folder path
+    folder_path = 'dataframes'
 
-    data.append([i + 1, b_mean, g_mean, r_mean])
+    # Check if the folder exists, if not, create it
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_path}' created.")
+    else:
+        print(f"Folder '{folder_path}' already exists.")
 
-    df = pd.DataFrame(data, columns=["Numéro", "B_mean", "G_mean", "R_mean"])
+    for idx, (ax, path_obj) in enumerate(zip(axes.flat, paths_objs)):
+        # Get the file name
+        file_name = os.path.splitext(os.path.basename(path_obj))[0]
+
+        # Load the image
+        img_colored = cv2.imread(path_obj)
+
+        # Segment the image
+        segmented_image, df = obj_seg.segment(img_colored)
+
+        # Save the dataframe to a CSV file
+        df.to_csv(f"{folder_path}/{file_name}.csv", index=False)
+
+        row = idx // 3
+        col = (idx % 3) * 2
+
+        # Display processed image
+        axes[row, col].imshow(segmented_image, vmin=0, vmax=1)
+        axes[row, col].set_title(file_name)
+        axes[row, col].axis('off')  # Hide axis for cleaner display
+
+        # Display original image
+        axes[row, col + 1].imshow(img_colored, vmin=0, vmax=1)
+        axes[row, col + 1].axis('off')  # Hide axis for cleaner display
+
+    # Adjust layout and display the plot
+    plt.tight_layout()
+    plt.show()
 
 
-# Afficher les résultats
-fig, axes = plt.subplots(
-    nrows=1,
-    ncols=2,
-    figsize=(15, 15),
-    sharex=True,
-    sharey=True,
-)
-print(df)
+# Get image path from argument
+argv = sys.argv
+image_path = None
 
-axes[0].imshow(img_colored, cmap="Greys_r")
-axes[0].set_title("Original")
+if len(argv) > 1:
+    image_path = argv[1]
 
-axes[1].imshow(img_contours)
-axes[1].set_title("Contours et Numérotation")
+if not image_path:
+    print("Please provide an image path as an argument")
+    sys.exit(1)
 
-for a in axes:
-    a.axis("off")
-fig.tight_layout()
-plt.show()
+if not os.path.exists(image_path):
+    print(f"Image not found: {image_path}")
+    sys.exit(1)
+
+print(f"Image path: {image_path}")
+
+
+if __name__ == "__main__":
+    main(image_path)
