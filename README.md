@@ -82,7 +82,7 @@ En lançant le 'main.py', nous obtenons une image PNG de nos résultats. On obse
 
 En plus de ce résultat notre programme enregistre les dataframes en format CSV avec les moyennes B, G et R de chaque minéral. Cela nous permet d'avoir la moyenne B, G, et R de l'image d'origine.
 
-La difficulté rencontrée lors de ce TP a été la segmentation qui a été embrouillée par un manque de luminosité sur certains échantillons et la superposition de minéraux entre eux.  
+Notre segmentation n'a pas été simple et n'est pas parfaite. La tâche a été compliquée par un manque de luminosité sur certains échantillons et la superposition de minéraux entre eux.  
 
 ## Ouverture (Effectué avant le cours)
 
