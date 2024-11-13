@@ -54,7 +54,8 @@ def main(path):
         axes[row, col].axis('off')  # Hide axis for cleaner display
 
         # Display original image
-        axes[row, col + 1].imshow(img_colored, vmin=0, vmax=1)
+        img_rgb = cv2.cvtColor(img_colored,cv2.COLOR_BGR2RGB)
+        axes[row, col + 1].imshow(img_rgb, vmin=0, vmax=1)
         axes[row, col + 1].axis('off')  # Hide axis for cleaner display
 
     # Adjust layout and display the plot
