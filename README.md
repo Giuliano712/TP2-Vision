@@ -31,6 +31,10 @@ images/
   Echantillion1Mod2_471.png
 ```
 
+```bash
+python3 main.py "PATH_TO_IMAGES"
+```
+
 ## Utilisation des méthodes de segmentation
 
 ### Méthode tester
