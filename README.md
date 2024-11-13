@@ -74,6 +74,16 @@ Une fois les grains isolés, nous avons extrait leur moyenne de couleur pour cha
 
 ## Résultats
 
+En lançant le 'main.py', nous obtenons une image PNG de nos résultats. On observe notre segmentation et la numération de chaque minéral sur chaque échantillon.
+
+<div style="width:80%; margin: auto;">
+    <img src="doc/Image.png" alt="accueil" style="width:100%;">
+</div>
+
+En plus de ce résultat notre programme enregistre les dataframes en format CSV avec les moyennes B, G et R de chaque minéral. Cela nous permet d'avoir la moyenne B, G, et R de l'image d'origine.
+
+La difficulté rencontrée lors de ce TP a été la segmentation qui a été embrouillée par un manque de luminosité sur certains échantillons et la superposition de minéraux entre eux.  
+
 ## Ouverture (Effectué avant le cours)
 
 Le fichier `segment_anything.py` provient du repository suivant [Segment Anything](https://github.com/facebookresearch/segment-anything)
